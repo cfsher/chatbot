@@ -7,8 +7,7 @@ function LoadingText() {
     let dotCount = 0;
 
     const interval = setInterval(() => {
-      // Cycle through 0 -> 3 dots
-      dotCount = (dotCount + 1) % 4; // 0, 1, 2, 3
+      dotCount = (dotCount + 1) % 4;
       setDots('.'.repeat(dotCount));
     }, 500);
 
