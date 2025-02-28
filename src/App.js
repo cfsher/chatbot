@@ -7,7 +7,7 @@ import rehypeHighlight from 'rehype-highlight';
 
 
 const openai = new OpenAI({
-  apiKey: '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',
+  apiKey: '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',
   dangerouslyAllowBrowser: true
 });
 
@@ -77,6 +77,7 @@ function App() {
                 margin: '15px 5px',
               }}
             >
+              <div style={{ fontWeight: '500', textDecoration: 'underline' }}>{message.sender === 'user' ? 'you' : 'assistant'}</div>
               <Markdown rehypePlugins={[rehypeHighlight]}>
                 {message.text}
               </Markdown>
@@ -88,9 +89,10 @@ function App() {
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
           style={{
-            width: '250px',
+            width: '200px',
             padding: '5px'
           }}
+          placeholder='enter a query..'
           value={input}
           onChange={(e) => inputChange(e.target.value)}
         />
