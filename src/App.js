@@ -7,7 +7,7 @@ import rehypeHighlight from 'rehype-highlight';
 
 
 const openai = new OpenAI({
-  apiKey: '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',
+  apiKey: <api_key_here>,
   dangerouslyAllowBrowser: true
 });
 
