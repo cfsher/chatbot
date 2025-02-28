@@ -74,10 +74,10 @@ function App() {
           messages.sort((a,b) => b.id - a.id).map(message => (
             <div style={{
                 textAlign: message.sender === 'user' ? 'right' : 'left',
-                margin: '15px 5px',
+                margin: '15px 20px',
               }}
             >
-              <div style={{ fontWeight: '500', textDecoration: 'underline' }}>{message.sender === 'user' ? 'you' : 'assistant'}</div>
+              <div style={{ fontWeight: '500' }}>{message.sender === 'user' ? 'you' : 'assistant'}</div>
               <Markdown rehypePlugins={[rehypeHighlight]}>
                 {message.text}
               </Markdown>
