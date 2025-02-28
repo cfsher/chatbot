@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import LoadingText from './components/LoadingText';
-import OpenAI from 'openai';
 import Markdown from 'react-markdown';
 import './styles.css'
 import rehypeHighlight from 'rehype-highlight';
-
-
-const openai = new OpenAI({
-  apiKey: <api_key_here>,
-  dangerouslyAllowBrowser: true
-});
 
 function App() {
 
@@ -26,15 +19,23 @@ function App() {
 
     if (input === '') return;
 
-    setMessages(prev => [...prev, {text: input, sender: 'user', id: Date.now()}])
+    const arr = [...messages, {text: input, sender: 'user', id: Date.now()}];
+    setMessages([...arr])
+
     const query = input;
     setInput('');
 
     try {
       setThinking(true);
-      const response = await runQuery(query);
-      const content = response.choices[0].message.content;
-      setMessages(prev => [...prev, {text: content, sender: 'chatgpt', id: Date.now()}])
+      const response = await fetch('http://localhost:3005/', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({query: query, messages: [...arr]}),
+      });
+      const json = await response.json();
+      setMessages([...arr, {text: json.content, sender: 'chatgpt', id: Date.now()}]);
     } finally {
       setThinking(false);
     }
@@ -45,22 +46,6 @@ function App() {
     });
     setMessages([]);
   }
-
-  const runQuery = async (query) => {
-
-    // formats conversation to be accepted by chatgpt api (for conversation state)
-    const formatted = messages.sort((a,b) => a.id - b.id).map(msg => ({
-      role: msg.sender === 'user' ? 'user' : 'assistant',
-      content: [{type: 'text', text: msg.text}],
-    }));
-    formatted.push({role: 'user', content: query});
-
-    return await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: formatted,
-      store: true
-    });
-  };
 
   return (
     <div className='app-container'>
