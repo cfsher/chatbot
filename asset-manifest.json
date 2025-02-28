@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/chatbot/static/js/main.a32d9f4a.js",
+    "index.html": "/chatbot/index.html",
+    "main.a32d9f4a.js.map": "/chatbot/static/js/main.a32d9f4a.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.a32d9f4a.js"
+  ]
+}
